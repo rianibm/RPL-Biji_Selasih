@@ -1,7 +1,8 @@
-id\ac\ukdw\fti\rpl\kelompokbijiselasih\UtamaController.class
-module-info.class
+id\ac\ukdw\fti\rpl\kelompokbijiselasih\SecondaryController.class
 id\ac\ukdw\fti\rpl\kelompokbijiselasih\Item.class
 id\ac\ukdw\fti\rpl\kelompokbijiselasih\MainController.class
 id\ac\ukdw\fti\rpl\kelompokbijiselasih\DBHelper.class
-id\ac\ukdw\fti\rpl\kelompokbijiselasih\DataVisual.class
+module-info.class
+id\ac\ukdw\fti\rpl\kelompokbijiselasih\PrimaryController.class
+.netbeans_automatic_build
 id\ac\ukdw\fti\rpl\kelompokbijiselasih\App.class

@@ -37,7 +37,6 @@
                   </TableView>
                </children>
             </HBox>
-            <Button fx:id="btnVisual" mnemonicParsing="false" onAction="#visualisasi" text="Visualisasi" textAlignment="CENTER" visible="false" />
          </children>
       </VBox>
       <ImageView fitHeight="156.0" fitWidth="131.0" layoutX="904.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
