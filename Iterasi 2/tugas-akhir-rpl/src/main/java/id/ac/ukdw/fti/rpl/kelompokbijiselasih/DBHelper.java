@@ -72,6 +72,9 @@ public class DBHelper {
                     }
                 }
             }
+            if(!listHasil.isEmpty()){
+                listHasil.add(new Item("0","person",keyword));
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -124,6 +127,26 @@ public class DBHelper {
                         listHasil.add(item);
                     }
                 }
+                for(int j=0;j<listHasil.size();j++){
+                    if(!listHasil.get(j).getEvent().isEmpty()){
+                        String first = listHasil.get(0).getNum();
+                        System.out.println(first);
+                        String second = first.substring(0,first.lastIndexOf('.'));
+                        //Gen.4.12
+                        //01234567
+                        String sql4 = "select * from books where chapters like '%"+second+"%';";
+                        System.out.println(sql4);
+                        ResultSet rs3 = stmt.executeQuery(sql4);
+                        String book = "";
+                        while (rs3.next()) {
+                            book = rs3.getString("bookName");
+                        }
+                        System.out.println(book);
+                        listHasil.add(new Item(book,"event",keyword));
+                        break;
+                    }
+                }
+
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }

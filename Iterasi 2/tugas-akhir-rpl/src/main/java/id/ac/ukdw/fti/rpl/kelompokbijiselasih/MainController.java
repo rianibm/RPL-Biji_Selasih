@@ -10,12 +10,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class MainController {
 
@@ -41,7 +46,15 @@ public class MainController {
     private TableColumn<Item, String> tColEvents;
     
     private ObservableList<Item> dataResult = FXCollections.observableArrayList();
-
+    
+    @FXML
+    private Button btnVisual;
+    
+    private boolean haveSearch = false;
+    private String searchBy = "";
+    private boolean indikator = true; //true untuk searchBy person-false untuk searchByEvent
+//    private String fromBook = "";
+    
     @FXML
     public void cari(ActionEvent event) {
         DBHelper db = new DBHelper();
@@ -64,28 +77,62 @@ public class MainController {
                 alert.setContentText("Hasil pencarian tidak ditemukan...!");
 
                 alert.showAndWait();
+            }else{
+                for(int i=0;i<listHasil.size()-1;i++){
+                    System.out.println(listHasil.get(i).toString());
+                    dataResult.add(listHasil.get(i));
+                }
+                resultText.setText("Hasil pencarian untuk "+textFieldCari.getText().substring(0,1).toUpperCase()+textFieldCari.getText().substring(1).toLowerCase()+" : ");
+                searchBy = listHasil.get(listHasil.size()-1).getEvent();
+                if(listHasil.get(listHasil.size()-1).getVerse()=="event"){
+                    indikator = false;
+                    searchBy = listHasil.get(listHasil.size()-1).getNum();
+                }
             }
-            for(int i=0;i<listHasil.size();i++){
-                System.out.println(listHasil.get(i).toString());
-                dataResult.add(listHasil.get(i));
-            }
-            resultText.setText("Hasil pencarian untuk "+textFieldCari.getText().substring(0,1).toUpperCase()+textFieldCari.getText().substring(1).toLowerCase()+" : ");
+
         }
         tColVerseNum.setCellValueFactory(new PropertyValueFactory<Item, String>("num"));
         tColVerses.setCellValueFactory(new PropertyValueFactory<Item, String>("verse"));
         tColEvents.setCellValueFactory(new PropertyValueFactory<Item,String>("event"));
         tvResult.setItems(dataResult);
+        haveSearch = true;
+        btnVisual.setVisible(haveSearch);
+
     }   
     
     @FXML
-    public void hitung(ActionEvent event) {
-        System.out.println("asda");
+    public void visualisasi(ActionEvent event) {
+        System.out.println("search by : "+searchBy);
+        System.out.println("indikator : "+indikator);
+        Stage stage = new Stage();
+        try {
+            // Step 2
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("utama.fxml"));
+            Parent root = loader.load();
+
+            // FXMLLoader loader = FXMLLoader.load(getClass().getClassLoader().getResource("id/ac/ukdw/fti/rpl/detail.fxml"));
+            // Step 3
+            UtamaController controller = loader.getController();
+            controller.recieve(searchBy, dataResult, indikator);
+            // Step 4
+            loader.setController(controller);
+            // Step 5
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.err.println(String.format("Error: %s", e.getMessage()));
+        }
     }
     
     public void initialize(URL url, ResourceBundle rb) {
         tColVerseNum.setCellValueFactory(new PropertyValueFactory<Item, String>("num"));
         tColVerses.setCellValueFactory(new PropertyValueFactory<Item, String>("verse"));
         tColEvents.setCellValueFactory(new PropertyValueFactory<Item,String>("event"));
+        
+        btnVisual.setVisible(haveSearch);
+        
     } 
     
 }
