@@ -16,8 +16,9 @@ public class App extends Application {
  private static Scene scene;
 
     @Override
+    //load file xml dan tampilannya + controller
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("main"));
+        scene = new Scene(loadFXML("main")); //load main
         stage.setScene(scene);
         stage.show();
     }
@@ -31,6 +32,7 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
+    //diakses pertama kali public static void main yang memanggil method launch
     public static void main(String[] args) {
         launch();
     }
