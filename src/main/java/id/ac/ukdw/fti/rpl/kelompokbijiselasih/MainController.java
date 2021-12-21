@@ -1,3 +1,4 @@
+//file ini utk menampilkan pas klik apa muncul apa
 package id.ac.ukdw.fti.rpl.kelompokbijiselasih;
 
 import java.io.IOException;
@@ -49,6 +50,8 @@ public class MainController {
     
     @FXML
     private Button btnVisual;
+
+    
     
     private boolean haveSearch = false;
     private String searchBy = "";
@@ -57,8 +60,11 @@ public class MainController {
     
     @FXML
     public void cari(ActionEvent event) {
-        DBHelper db = new DBHelper();
-        dataResult.clear();
+        DBHelper db = new DBHelper(); //pencet tombol cari, bikin koneksi ke database
+        /*tabel yg mau ditampilin ambil data dari list yg namanya dataResult,
+        clear utk kosongin tabel tiap kali klik tombol cari */
+        dataResult.clear(); 
+        //kalo pencarian kosong, munculkan tampilan pesan error baris 68-73
         if(textFieldCari.getText().equals("")){
             resultText.setText("Hasil pencarian untuk "+textFieldCari.getText()+" : ");
             Alert alert = new Alert(AlertType.ERROR);
@@ -67,8 +73,10 @@ public class MainController {
             alert.setContentText("Ooops, kata pencarian tidak boleh kosong!");
 
             alert.showAndWait();
+        //kalo pencarian ga kosong
         }else{
-            ArrayList<Item> listHasil = new ArrayList<Item>();
+            //buat penampungan hasil (array), objek Item itu nampung data dari database
+            ArrayList<Item> listHasil = new ArrayList<Item>(); 
             listHasil = db.searchWord(textFieldCari.getText());
             if(listHasil.size()==0){
                 Alert alert = new Alert(AlertType.WARNING);
