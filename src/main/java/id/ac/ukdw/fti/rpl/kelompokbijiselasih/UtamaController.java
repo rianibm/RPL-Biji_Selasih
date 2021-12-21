@@ -1,3 +1,4 @@
+//ini file controller buat visualisasi data
 package id.ac.ukdw.fti.rpl.kelompokbijiselasih;
 
 import java.net.URL;
